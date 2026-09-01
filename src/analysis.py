@@ -187,6 +187,13 @@ def save_outputs(df: pd.DataFrame, summary: pd.DataFrame) -> None:
     print("\nBest Performing Machine:")
     print(best_machine.to_string(index=False))
 
+    machine_ranking = df[
+        ["Machine", "Production", "Defects", "Downtime", "Defect_Rate", "Performance_Score"]
+    ].sort_values(by="Performance_Score", ascending=False)
+
+    print("\n===== MACHINE RANKING =====")
+    print(machine_ranking.to_string(index=False))
+
     plt.figure(figsize=(10, 6))
     plt.bar(machine_performance["Machine"], machine_performance["Performance_Score"])
     plt.title("Machine Performance Score")
