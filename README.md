@@ -56,6 +56,10 @@ The Power BI dashboard tracks:
 
 📊 Power BI Dashboard
 
+### 📊 Dashboard Preview
+
+![Manufacturing Production & Machine Performance Dashboard](dashboard.png)
+
 The interactive dashboard contains:
 
 * Production by Machine
