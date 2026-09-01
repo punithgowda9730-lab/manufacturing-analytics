@@ -203,6 +203,39 @@ def save_outputs(df: pd.DataFrame, summary: pd.DataFrame) -> None:
     plt.savefig(VIZ_DIR / "machine_performance_score.png", dpi=150)
     plt.close()
 
+    # Use machine_performance for the ranking table and insights
+    machine_ranking = machine_performance.sort_values(
+        by="Performance_Score", ascending=False
+    )
+
+    best_machine = machine_ranking.iloc[0]
+    worst_machine = machine_ranking.iloc[-1]
+    highest_downtime = df.loc[df["Downtime"].idxmax()]
+    highest_defect_machine = df.loc[df["Defect_Rate"].idxmax()]
+
+    print("\n===== ACTIONABLE INSIGHTS =====")
+    print(
+        f"\nBest Performing Machine: {best_machine['Machine']}"
+        f"\nPerformance Score: {best_machine['Performance_Score']:.2f}"
+    )
+    print(
+        f"\nMachine Requiring Attention: {worst_machine['Machine']}"
+        f"\nPerformance Score: {worst_machine['Performance_Score']:.2f}"
+    )
+    print(
+        f"\nHighest Downtime Machine: {highest_downtime['Machine']}"
+        f"\nDowntime: {highest_downtime['Downtime']}"
+    )
+    print(
+        f"\nHighest Defect Rate Machine: {highest_defect_machine['Machine']}"
+        f"\nDefect Rate: {highest_defect_machine['Defect_Rate']:.2f}%"
+    )
+    print(
+        "\nRecommendation:"
+        "\nInvestigate machines with high downtime and defect rates."
+        "\nPrioritize preventive maintenance for low-performing machines."
+    )
+
     print(f"Saved dataset to: {csv_path}")
     print(f"Saved visualizations to: {VIZ_DIR}")
 
