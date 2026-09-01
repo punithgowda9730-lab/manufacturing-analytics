@@ -1,64 +1,103 @@
-# Manufacturing Analytics
+Manufacturing Production & Machine Performance Analysis
 
-Manufacturing Production and Machine Performance Analysis using Python and Pandas.
+📌 Project Overview
 
-## Overview
-This project analyzes manufacturing data to study production trends, downtime, defects, and machine performance. It supports operational decision-making and helps identify machine reliability and efficiency opportunities.
+This project analyzes manufacturing production data to identify machine-level performance, quality issues, downtime, and production trends.
 
-## Project Goals
-- Measure production volume by machine and shift
-- Identify defect-prone machines and processes
-- Understand production performance
-- Identify bottlenecks and defects
-- Visualize machine-level insights
-- Analyze output efficiency and downtime drivers
-- Visualize key manufacturing KPIs over time
+The project combines **Python, Pandas, Matplotlib, and Power BI** to transform raw manufacturing data into useful operational insights.
 
-## Tech Stack
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
+🎯 Objectives
 
-## Project Structure
+* Analyze overall production performance
+* Identify machines with higher defect rates
+* Analyze machine downtime
+* Monitor production trends over time
+* Measure overall manufacturing yield
+* Build an interactive Power BI dashboard
+
+📊 Dataset
+
+The dataset contains the following fields:
+
+| Column             | Description                 |
+| ------------------ | --------------------------- |
+| `date`             | Production date             |
+| `machine`          | Machine identifier          |
+| `shift`            | Production shift            |
+| `produced_units`   | Number of units produced    |
+| `defects`          | Number of defective units   |
+| `downtime_minutes` | Machine downtime in minutes |
+| `yield_rate`       | Production yield rate       |
+
+🛠️ Technologies Used
+
+Python
+Pandas
+Matplotlib
+Power BI
+Git & GitHub
+
+📈 Key Performance Indicators
+
+The Power BI dashboard tracks:
+
+* **Total Production:** 64K units
+* **Total Defects:** 5K
+* **Defect Rate:** 8.53%
+* **Total Downtime:** 2.5K minutes
+* **Average Yield:** 90.44%
+
+🔍 Key Findings
+
+* **M-101** has the highest defect rate among the analyzed machines.
+* **M-104** has the highest downtime.
+* Overall average yield is **90.44%**.
+* The dashboard allows production performance to be analyzed by **machine** and **shift**.
+
+📊 Power BI Dashboard
+
+The interactive dashboard contains:
+
+* Production by Machine
+* Defect Rate by Machine
+* Downtime by Machine
+* Production Trend Over Time
+* Total Production KPI
+* Total Defects KPI
+* Defect Rate KPI
+* Total Downtime KPI
+* Average Yield KPI
+* Machine and Shift filters
+
+📁 Project Structure
+
 ```text
 manufacturing-analytics/
-├── README.md
-├── requirements.txt
-├── .gitignore
+│
 ├── data/
-│   ├── manufacturing_data.csv
-│   └── .gitkeep
+│   └── manufacturing_data.csv
+│
+├── notebooks/
+│
 ├── src/
-│   ├── analysis.py
-│   └── visualize.py
-└── visualizations/
-    ├── production_by_machine.png
-    ├── defects_by_machine.png
-    └── output_trend.png
+│
+├── Manufacturing_Production_Analytics.pbix
+│
+├── README.md
+└── .gitignore
 ```
 
-## Getting Started
-1. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the analysis pipeline:
-   ```bash
-   python src/analysis.py
-   ```
-4. Open the generated plots in the `visualizations/` folder.
+🚀 Future Improvements
 
-## Sample Insights
-- Highest-producing machines by total output
-- Machines with the highest defect rates
-- Production changes across shift and day segments
+* Develop a machine failure prediction model
+* Add predictive maintenance capabilities
+* Analyze factors contributing to machine downtime
+* Build machine health indicators
+* Implement machine-learning based failure prediction
+* Improve dashboard automation
 
-## Author
-Punith Gowda
+👨‍💻 Project Focus
+
+This project demonstrates practical skills in:
+
+**Data Cleaning → Exploratory Data Analysis → Data Visualization → KPI Analysis → Business Insights → Power BI Dashboarding**
