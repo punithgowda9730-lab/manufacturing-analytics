@@ -61,4 +61,4 @@ manufacturing-analytics/
 - Production changes across shift and day segments
 
 ## Author
-Punit Gowda
+Punith Gowda
