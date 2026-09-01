@@ -120,6 +120,37 @@ def save_outputs(df: pd.DataFrame, summary: pd.DataFrame) -> None:
     plt.savefig(VIZ_DIR / "output_trend.png", dpi=150)
     plt.close()
 
+    # Defect-rate analysis by machine
+    df["Machine"] = df["machine"]
+    df["Production"] = df["produced_units"]
+    df["Defects"] = df["defects"]
+    df["Defect_Rate"] = (df["Defects"] / df["Production"]) * 100
+
+    machine_defect_rate = df.groupby("Machine", as_index=False)[["Defect_Rate"]].mean()
+    machine_defect_rate["Defect_Rate"] = machine_defect_rate["Defect_Rate"].round(2)
+
+    print("\n===== DEFECT RATE ANALYSIS =====")
+    print(df[["Machine", "Production", "Defects", "Defect_Rate"]].head(10).to_string(index=False))
+
+    highest_defect_rate = machine_defect_rate.loc[machine_defect_rate["Defect_Rate"].idxmax()]
+    print("\nMachine with Highest Defect Rate:")
+    print(highest_defect_rate.to_string(index=False))
+
+    defect_rate_chart = machine_defect_rate.plot(
+        kind="bar",
+        x="Machine",
+        y="Defect_Rate",
+        color="darkorange",
+        title="Defect Rate by Machine",
+        legend=False,
+        figsize=(10, 5),
+    )
+    defect_rate_chart.set_xlabel("Machine")
+    defect_rate_chart.set_ylabel("Defect Rate (%)")
+    plt.tight_layout()
+    plt.savefig(VIZ_DIR / "defect_rate_by_machine.png", dpi=150)
+    plt.close()
+
     print(f"Saved dataset to: {csv_path}")
     print(f"Saved visualizations to: {VIZ_DIR}")
 
