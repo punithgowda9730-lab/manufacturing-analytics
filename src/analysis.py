@@ -124,6 +124,7 @@ def save_outputs(df: pd.DataFrame, summary: pd.DataFrame) -> None:
     df["Machine"] = df["machine"]
     df["Production"] = df["produced_units"]
     df["Defects"] = df["defects"]
+    df["Downtime"] = df["downtime_minutes"]
     df["Defect_Rate"] = (df["Defects"] / df["Production"]) * 100
 
     machine_defect_rate = df.groupby("Machine", as_index=False)[["Defect_Rate"]].mean()
@@ -149,6 +150,50 @@ def save_outputs(df: pd.DataFrame, summary: pd.DataFrame) -> None:
     defect_rate_chart.set_ylabel("Defect Rate (%)")
     plt.tight_layout()
     plt.savefig(VIZ_DIR / "defect_rate_by_machine.png", dpi=150)
+    plt.close()
+
+    machine_performance = (
+        df.groupby("Machine", as_index=False)
+        .agg(
+            Production=("Production", "sum"),
+            Defects=("Defects", "sum"),
+            Downtime=("Downtime", "sum"),
+        )
+    )
+
+    machine_performance["Production_Score"] = (
+        machine_performance["Production"] / machine_performance["Production"].max()
+    ) * 100
+    machine_performance["Defect_Score"] = (
+        1 - (machine_performance["Defects"] / machine_performance["Defects"].max())
+    ) * 100
+    machine_performance["Downtime_Score"] = (
+        1 - (machine_performance["Downtime"] / machine_performance["Downtime"].max())
+    ) * 100
+    machine_performance["Performance_Score"] = (
+        machine_performance["Production_Score"] * 0.5
+        + machine_performance["Defect_Score"] * 0.3
+        + machine_performance["Downtime_Score"] * 0.2
+    )
+
+    print("\n===== MACHINE PERFORMANCE ANALYSIS =====")
+    print(
+        machine_performance[
+            ["Machine", "Production", "Defects", "Downtime", "Performance_Score"]
+        ].to_string(index=False)
+    )
+
+    best_machine = machine_performance.loc[machine_performance["Performance_Score"].idxmax()]
+    print("\nBest Performing Machine:")
+    print(best_machine.to_string(index=False))
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(machine_performance["Machine"], machine_performance["Performance_Score"])
+    plt.title("Machine Performance Score")
+    plt.xlabel("Machine")
+    plt.ylabel("Performance Score")
+    plt.tight_layout()
+    plt.savefig(VIZ_DIR / "machine_performance_score.png", dpi=150)
     plt.close()
 
     print(f"Saved dataset to: {csv_path}")
